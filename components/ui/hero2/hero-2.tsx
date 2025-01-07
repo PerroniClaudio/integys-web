@@ -1,12 +1,7 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-import { stegaClean } from "next-sanity";
 import PortableTextRenderer from "@/components/portable-text-renderer";
 
 export default function Hero2({
-  tagLine,
   title,
   title_left,
   title_right,
@@ -14,7 +9,6 @@ export default function Hero2({
   image_left,
   image_right,
 }: Partial<{
-  tagLine: string;
   title: string;
   title_left: string;
   title_right: string;

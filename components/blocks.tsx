@@ -1,5 +1,6 @@
 import Hero1 from "@/components/ui/hero/hero-1";
 import Hero2 from "@/components/ui/hero2/hero-2";
+import Metrics from "@/components/ui/metrics/metrics";
 import SectionHeader from "@/components/ui/section-header";
 import SplitRow from "@/components/ui/split/split-row";
 import GridRow from "@/components/ui/grid/grid-row";
@@ -15,6 +16,7 @@ import FormNewsletter from "@/components/ui/forms/newsletter";
 const componentMap: { [key: string]: React.ComponentType<any> } = {
   "hero-1": Hero1,
   "hero-2": Hero2,
+  "metrics": Metrics,
   "section-header": SectionHeader,
   "split-row": SplitRow,
   "grid-row": GridRow,
