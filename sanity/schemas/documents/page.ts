@@ -42,6 +42,7 @@ export default defineType({
         { type: "hero-1" },
         { type: "hero-2" },
         { type: "metrics" },
+        { type: "promo-card" },
         { type: "section-header" },
         { type: "split-row" },
         { type: "grid-row" },

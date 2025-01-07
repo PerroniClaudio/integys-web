@@ -3,7 +3,7 @@ import { LayoutTemplate } from "lucide-react";
 
 export default defineType({
     name: "hero-2",
-    title: "Hero 2",
+    title: "Hero Integys",
     type: "object",
     icon: LayoutTemplate,
     fields: [

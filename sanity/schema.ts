@@ -32,6 +32,7 @@ import logoCloud1 from "./schemas/blocks/logo-cloud/logo-cloud-1";
 import faqs from "./schemas/blocks/faqs";
 import newsletter from "./schemas/blocks/forms/newsletter";
 import metrics from "./schemas/blocks/metrics/metrics";
+import promoCard from "./schemas/blocks/promo-card/promo-card";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -52,6 +53,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     hero1,
     hero2,
     metrics,
+    promoCard,
     sectionHeader,
     splitColumn,
     splitRow,

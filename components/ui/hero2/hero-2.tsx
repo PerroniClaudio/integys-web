@@ -48,10 +48,10 @@ export default function Hero2({
 
           <div className="grid grid-cols-2">
             <div className="flex flex-col justify-center items-center">
-              <p className="text-white font-bold text-3xl uppercase">{title_left}</p>
+              <p className="text-white font-bold text-3xl uppercase text-center px-2">{title_left}</p>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p className="text-white font-bold text-3xl uppercase">{title_right}</p>
+              <p className="text-white font-bold text-3xl uppercase text-center px-2">{title_right}</p>
             </div>
           </div>
 
