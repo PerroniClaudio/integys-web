@@ -17,6 +17,6 @@ export default async function IndexPage() {
   if (!page) {
     return MissingSanityPage({ document: "page", slug: "index" });
   }
-
+  
   return <Blocks blocks={page?.blocks} />;
 }

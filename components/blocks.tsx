@@ -1,4 +1,5 @@
 import Hero1 from "@/components/ui/hero/hero-1";
+import Hero2 from "@/components/ui/hero2/hero-2";
 import SectionHeader from "@/components/ui/section-header";
 import SplitRow from "@/components/ui/split/split-row";
 import GridRow from "@/components/ui/grid/grid-row";
@@ -10,8 +11,10 @@ import LogoCloud1 from "@/components/ui/logo-cloud/logo-cloud-1";
 import FAQs from "@/components/ui/faqs";
 import FormNewsletter from "@/components/ui/forms/newsletter";
 
+
 const componentMap: { [key: string]: React.ComponentType<any> } = {
   "hero-1": Hero1,
+  "hero-2": Hero2,
   "section-header": SectionHeader,
   "split-row": SplitRow,
   "grid-row": GridRow,
