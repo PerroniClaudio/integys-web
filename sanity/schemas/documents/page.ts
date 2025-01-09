@@ -24,6 +24,12 @@ export default defineType({
   fields: [
     defineField({ name: "title", type: "string", group: "content" }),
     defineField({
+      name: "logo",
+      title: "Logo",
+      type: "image",
+      group: "content",
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -43,6 +49,7 @@ export default defineType({
         { type: "hero-2" },
         { type: "metrics" },
         { type: "promo-card" },
+        { type: "contactform" },
         { type: "section-header" },
         { type: "split-row" },
         { type: "grid-row" },
@@ -80,6 +87,7 @@ export default defineType({
       type: "image",
       group: "seo",
     }),
+
     orderRankField({ type: "page" }),
   ],
 });

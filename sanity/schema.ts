@@ -33,6 +33,7 @@ import faqs from "./schemas/blocks/faqs";
 import newsletter from "./schemas/blocks/forms/newsletter";
 import metrics from "./schemas/blocks/metrics/metrics";
 import promoCard from "./schemas/blocks/promo-card/promo-card";
+import contactform from "./schemas/blocks/contactform/contactform";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -54,6 +55,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     hero2,
     metrics,
     promoCard,
+    contactform,
     sectionHeader,
     splitColumn,
     splitRow,

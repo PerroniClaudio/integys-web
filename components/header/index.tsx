@@ -3,6 +3,7 @@ import Logo from "@/components/logo";
 import MobileNav from "@/components/header/mobile-nav";
 import DesktopNav from "@/components/header/desktop-nav";
 import { ModeToggle } from "@/components/menu-toggle";
+import { fetchSanityLogo } from "@/app/(main)/actions";
 
 const navItems = [
   {
@@ -10,19 +11,21 @@ const navItems = [
     href: "/",
     target: false,
   },
-  {
-    label: "Blog",
-    href: "/blog",
-    target: false,
-  },
-  {
-    label: "About",
-    href: "/about",
-    target: false,
-  },
+  // {
+  //   label: "Blog",
+  //   href: "/blog",
+  //   target: false,
+  // },
+  // {
+  //   label: "About",
+  //   href: "/about",
+  //   target: false,
+  // },
 ];
 
-export default function Header() {
+export default async function Header() {
+
+
   return (
     <header className="sticky top-0 w-full border-border/40 bg-background/95 z-50">
       <div className="container flex items-center justify-between h-14">

@@ -19,6 +19,7 @@ declare global {
     type Page = PageBase & {
       readonly _type: "page";
       blocks?: Block[];
+      logo?: Image;
     };
 
     type Post = PageBase &

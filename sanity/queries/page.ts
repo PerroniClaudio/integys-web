@@ -13,6 +13,7 @@ import { logoCloud1Query } from "./logo-cloud/logo-cloud-1";
 import { faqsQuery } from "./faqs";
 import { formNewsletterQuery } from "./forms/newsletter";
 import { promoCardQuery } from "./promo-card/promo-card";
+import { contactformQuery } from "./contactform/contactform";
 
 export const PAGE_QUERY = groq`
   *[_type == "page" && slug.current == $slug][0]{
@@ -21,6 +22,7 @@ export const PAGE_QUERY = groq`
       ${hero2Query}
       ${metricsQuery}
       ${promoCardQuery}
+      ${contactformQuery}
       ${sectionHeaderQuery}
       ${splitRowQuery}
       ${gridRowQuery}
@@ -36,6 +38,18 @@ export const PAGE_QUERY = groq`
     meta_description,
     noindex,
     ogImage {
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+    },
+    logo {
       asset->{
         _id,
         url,

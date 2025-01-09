@@ -11,7 +11,8 @@ import Cta1 from "@/components/ui/cta/cta-1";
 import LogoCloud1 from "@/components/ui/logo-cloud/logo-cloud-1";
 import FAQs from "@/components/ui/faqs";
 import FormNewsletter from "@/components/ui/forms/newsletter";
-import PromoCard from "./ui/promo-card/promo-card";
+import PromoCard from "@/components/ui/promo-card/promo-card";
+import ContactForm from "@/components/ui/contactform/contactform";
 
 
 const componentMap: { [key: string]: React.ComponentType<any> } = {
@@ -19,6 +20,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
   "hero-2": Hero2,
   "metrics": Metrics,
   "promo-card": PromoCard,
+  "contactform": ContactForm,
   "section-header": SectionHeader,
   "split-row": SplitRow,
   "grid-row": GridRow,
@@ -32,6 +34,7 @@ const componentMap: { [key: string]: React.ComponentType<any> } = {
 };
 
 export default function Blocks({ blocks }: { blocks?: Sanity.Block[] }) {
+
   return (
     <>
       {blocks?.map((block: Sanity.Block) => {
