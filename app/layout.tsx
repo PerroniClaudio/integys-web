@@ -10,8 +10,8 @@ const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
   title: {
-    template: "%s | Schema UI Starter",
-    default: "Sanity Next.js Website | Schema UI Starter",
+    template: "Integys | infrastrutture IT per imprese ed enti pubblici",
+    default: "Integys | infrastrutture IT per imprese ed enti pubblici",
   },
   openGraph: {
     images: [
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         height: 630,
       },
     ],
-    locale: "en_US",
+    locale: "it_IT",
     type: "website",
   },
   robots: !isProduction ? "noindex, nofollow" : "index, follow",
