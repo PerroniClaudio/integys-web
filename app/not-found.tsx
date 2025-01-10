@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Custom404 from "@/components/404";
