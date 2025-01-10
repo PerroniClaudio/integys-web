@@ -9,11 +9,11 @@ export default async function Logo() {
     return null;
   }
 
-  let logourl = logoData.logo?.asset ? urlFor(logoData.logo.asset).url() : null;
+  let logourl = logoData.logo?.asset ? urlFor(logoData.logo.asset).url() : "";
 
   return (
     <div>
-      <img src={logourl} alt="logo" className="w-32" />
+      <img src={logourl!} alt="logo" className="w-32" />
     </div>
   );
 }

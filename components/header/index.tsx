@@ -3,7 +3,7 @@ import Logo from "@/components/logo";
 import MobileNav from "@/components/header/mobile-nav";
 import DesktopNav from "@/components/header/desktop-nav";
 import { ModeToggle } from "@/components/menu-toggle";
-import { fetchSanityLogo } from "@/app/(main)/actions";
+
 
 const navItems = [
   {
@@ -11,16 +11,16 @@ const navItems = [
     href: "/",
     target: false,
   },
-  // {
-  //   label: "Blog",
-  //   href: "/blog",
-  //   target: false,
-  // },
-  // {
-  //   label: "About",
-  //   href: "/about",
-  //   target: false,
-  // },
+  {
+    label: "Azienda",
+    href: "/azienda",
+    target: false,
+  },
+  {
+    label: "Pubblica Amministrazione",
+    href: "/ente-pubblico",
+    target: false,
+  },
 ];
 
 export default async function Header() {
