@@ -30,10 +30,14 @@ export default function Footer() {
         <div className="container grid lg:grid-cols-3">
           <div className="flex flex-col"></div>
           <div className="flex flex-col items-center gap-2">
-            <Logo />
-            <p className="text-xs font-thin">INTEGYS è una divisione</p>
+            <div className="h-12">
+              <Logo />
+            </div>
+            <p className="text-xs font-thin">
+              INTEGYS è una divisione iFortech
+            </p>
             <img src="https://integys.com/assets/images/logo-white-ift.png" width="119" alt=""></img>
-            <p className="text-xs font-thin">VIA SEMPIONE 11 - MONZA - 20900 (MB)</p>
+            <p className="text-xs font-thin">VIA PISA 250 - SESTO SAN GIOVANNI - 20099 (MI)</p>
             <p className="text-xs font-thin">&copy; {getCurrentYear()} INTEGYS. All rights reserved.</p>
           </div>
           <div className="flex flex-col"></div>

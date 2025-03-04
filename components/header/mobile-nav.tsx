@@ -29,7 +29,7 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <div className="mr-6 ml-auto">
+          <div className="mr-6 ml-auto h-12">
             <Logo />
           </div>
           <div className="sr-only">
@@ -42,7 +42,7 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
             <ul className="list-none text-right space-y-3">
               <>
                 {navItems.map((navItem) => (
-                  <li key={navItem.label}>
+                  <li key={navItem.key}>
                     <Link
                       onClick={() => setOpen(false)}
                       href={navItem.href}

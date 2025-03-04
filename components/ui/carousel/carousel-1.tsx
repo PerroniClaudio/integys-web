@@ -62,7 +62,7 @@ export default function Carousel1({
           <CarouselContent>
             {images.map((image, index) => (
               <CarouselItem
-                key={`${index}-${image.alt}`}
+                key={`${index}-${image.alt?.replace(/\s+/g, "_")}`}
                 className={CAROUSEL_SIZES[stegaClean(size)]}
               >
                 {image && (
