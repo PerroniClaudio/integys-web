@@ -1,19 +1,16 @@
-import { fetchSanityLogo } from "@/app/(main)/actions";
-import { urlFor } from "@/sanity/lib/image";
+"use client";
+import { useLogo } from "@/context/LogoContext";
 
-export default async function Logo() {
+export default function Logo() {
+  const logoUrl = useLogo();
 
-  let logoData = await fetchSanityLogo();
-
-  if(!logoData) {
-    return null;
+  if (!logoUrl) {
+    return <div>
+      {/* Preferisco non far vedere la scritta loading */}
+    </div>;
   }
 
-  let logourl = logoData.logo?.asset ? urlFor(logoData.logo.asset).url() : "";
-
   return (
-    <div>
-      <img src={logourl!} alt="logo" className="w-32" />
-    </div>
+    <img src={logoUrl} alt="Logo" className="max-h-full" />
   );
 }

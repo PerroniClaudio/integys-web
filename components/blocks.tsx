@@ -37,13 +37,13 @@ export default function Blocks({ blocks }: { blocks?: Sanity.Block[] }) {
 
   return (
     <>
-      {blocks?.map((block: Sanity.Block) => {
+      {blocks?.map((block: Sanity.Block, index) => {
         const Component = componentMap[block._type];
         if (!Component) {
           // Fallback for unknown block types to debug
-          return <div data-type={block._type} key={block._key} />;
+          return <div data-type={block._type} key={block?._key || index} />;
         }
-        return <Component {...block} key={block._key} />;
+        return <Component {...block} key={block?._key || index} />;
       })}
     </>
   );

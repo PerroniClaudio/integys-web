@@ -6,7 +6,7 @@ export default function DesktopNav({ navItems }: { navItems: NavItem[] }) {
     <div className="hidden xl:flex items-center gap-7 text-primary">
       {navItems.map((navItem) => (
         <Link
-          key={navItem.label}
+          key={navItem.key}
           href={navItem.href}
           target={navItem.target ? "_blank" : undefined}
           rel={navItem.target ? "noopener noreferrer" : undefined}

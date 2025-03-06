@@ -41,7 +41,7 @@ export default function Breadcrumbs({
       <BreadcrumbList>
         {links.map((link, index) => (
           <BreadcrumbCustomItem
-            key={link.label}
+            key={link.label.replace(/\s+/g, "_")}
             {...link}
             isCurrent={index === links.length - 1}
           />
