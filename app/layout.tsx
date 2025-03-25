@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { LogoProvider } from "@/context/LogoContext";
+import PageTracker from "@/components/tracking/pagetracker";
 
 const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
 
@@ -46,19 +47,16 @@ export default function RootLayout({
         className={cn(
           "min-h-screen bg-background font-sans antialiased overscroll-none",
           fontSans.variable
-        )}
-      >
+        )}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
-        >
-          <LogoProvider>
-            {children}
-          </LogoProvider>
+          disableTransitionOnChange>
+          {children}
         </ThemeProvider>
         <Toaster position="top-center" richColors />
+        <PageTracker />
       </body>
     </html>
   );
