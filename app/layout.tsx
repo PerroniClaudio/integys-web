@@ -53,7 +53,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
-          {children}
+          <LogoProvider>{children}</LogoProvider>
         </ThemeProvider>
         <Toaster position="top-center" richColors />
         <PageTracker />
