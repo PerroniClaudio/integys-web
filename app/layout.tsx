@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { LogoProvider } from "@/context/LogoContext";
+import { Suspense } from "react";
 import PageTracker from "@/components/tracking/pagetracker";
 
 const isProduction = process.env.NEXT_PUBLIC_SITE_ENV === "production";
@@ -56,7 +57,9 @@ export default function RootLayout({
           <LogoProvider>{children}</LogoProvider>
         </ThemeProvider>
         <Toaster position="top-center" richColors />
-        <PageTracker />
+        <Suspense fallback={<div>Loading...</div>}>
+          <PageTracker />
+        </Suspense>
       </body>
     </html>
   );
