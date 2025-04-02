@@ -37,7 +37,7 @@ const getSessionId = (): string => {
 
 interface TrackingData {
   path: string;
-  referrer?: string;
+  referer?: string;
   timestamp: number;
   session_id?: string;
   user_email?: string | null;
@@ -50,12 +50,12 @@ export const trackPageView = async (path: string): Promise<void> => {
     if (!sessionId) return;
 
     const urlParams = new URLSearchParams(window.location.search);
-    const referrer = urlParams.get("referrer") || "direct_traffic";
+    const referer = urlParams.get("referer") || "direct_traffic";
     const user_email = urlParams.get("email") || null;
 
     const data: TrackingData = {
       path,
-      referrer,
+      referer,
       timestamp: Date.now(),
       session_id: sessionId,
       user_email,
