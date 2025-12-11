@@ -48,7 +48,7 @@ function ContactForm({
         description: "",
     })
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         console.log("handleSubmit called", { isVerified, formData });
 
@@ -60,33 +60,38 @@ function ContactForm({
             return
         }
 
-        fetch("/api/contactform", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: formData.email,
-                name: formData.name,
-                businessName: formData.business_name,
-                requestType: formData.request,
-                message: formData.description,
-            }),
-        })
-        .then((response) => response.json())
-        .then((data) => {
+        try {
+            const response = await fetch("/api/contactform", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    name: formData.name,
+                    businessName: formData.business_name,
+                    requestType: formData.request,
+                    message: formData.description,
+                }),
+            })
+
+            const data = await response.json()
+
+            if (!response.ok) {
+                throw new Error(data?.message || "Invio non riuscito")
+            }
+
             toast({
                 title: "Richiesta di contatto registrata con successo",
-                description: "A breve verrà contattato da uno dei nostri operatori",
+                description: data?.message || "A breve verrà contattato da uno dei nostri operatori",
               });
-        })
-        .catch(() => {
+        } catch (error) {
             toast({
                 title: "Errore durante l'invio",
-                description: "Riprovare tra qualche secondo.",
+                description: error instanceof Error ? error.message : "Riprovare tra qualche secondo.",
                 variant: "destructive",
             });
-        })
+        }
         
         
     }

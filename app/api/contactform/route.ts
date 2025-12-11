@@ -43,7 +43,12 @@ export async function POST(request: Request) {
     await transporter.sendMail(mailData);
 
     return new Response(
-      JSON.stringify([name, email, businessName, requestType, message])
+      JSON.stringify({
+        success: true,
+        message: "Richiesta inviata correttamente",
+        data: { name, email, businessName, requestType },
+      }),
+      { status: 200 }
     );
   } catch (error) {
     console.error("contactform error", error);
