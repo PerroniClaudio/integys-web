@@ -129,7 +129,7 @@ function ContactForm({
                         <Button>{button_text}</Button>
                     </DialogTrigger>
 
-                    <DialogContent className="sm:max-w-md">
+                    <DialogContent className="sm:max-w-md z-[60]">
                         <DialogHeader>
                             <DialogTitle>Contattaci</DialogTitle>
                             <DialogDescription></DialogDescription>
@@ -188,7 +188,7 @@ function ContactForm({
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                 />
                             </div>
-                            <div>
+                            <div className="relative z-[70]">
                                 <ReCAPTCHA
                                     ref={captchaRef}
                                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
