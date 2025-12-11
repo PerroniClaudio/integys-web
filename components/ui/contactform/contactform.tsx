@@ -50,12 +50,13 @@ function ContactForm({
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
+        console.log("handleSubmit called", { isVerified, formData });
 
         if(!isVerified) {
             toast({
                 title: "Verifica reCAPTCHA fallita",
                 description: "Per favore, completa il reCAPTCHA.",
-            });
+                });
             return
         }
 

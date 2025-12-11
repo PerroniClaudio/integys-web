@@ -6,36 +6,47 @@ const mailSenderAccount = {
 };
 
 export async function POST(request: Request) {
-  const { name, email, businessName, requestType, message } =
-    await request.json();
+  try {
+    const { name, email, businessName, requestType, message } =
+      await request.json();
 
-  // return new Response(JSON.stringify({ business:business, email:email, field:field, devices:devices, message:message}));
+    if (!name || !email || !businessName || !requestType || !message) {
+      return new Response("Missing required fields", { status: 400 });
+    }
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.office365.com",
-    port: 587,
-    secure: false,
-    tls: {
-      ciphers: "SSLv3",
-      rejectUnauthorized: false,
-    },
-    auth: {
-      user: mailSenderAccount.user,
-      pass: mailSenderAccount.pass,
-    },
-  });
+    if (!mailSenderAccount.user || !mailSenderAccount.pass) {
+      return new Response("Email configuration missing", { status: 500 });
+    }
 
-  const mailData = {
-    from: mailSenderAccount.user,
-    to: "commerciale@integys.com",
-    subject: `Richiesta di contatto da INTEGYS`,
-    text: message,
-    html: `<div> Nome: ${name} <br/> Email aziendale: ${email} <br/> Azienda: ${businessName} <br/> Richiesta: ${requestType} <br/> Messaggio: <br/> ${message} </div>`,
-  };
+    const transporter = nodemailer.createTransport({
+      host: "smtp.office365.com",
+      port: 587,
+      secure: false,
+      tls: {
+        ciphers: "SSLv3",
+        rejectUnauthorized: false,
+      },
+      auth: {
+        user: mailSenderAccount.user,
+        pass: mailSenderAccount.pass,
+      },
+    });
 
-  const info = await transporter.sendMail(mailData);
+    const mailData = {
+      from: mailSenderAccount.user,
+      to: "commerciale@integys.com",
+      subject: `Richiesta di contatto da INTEGYS`,
+      text: message,
+      html: `<div> Nome: ${name} <br/> Email aziendale: ${email} <br/> Azienda: ${businessName} <br/> Richiesta: ${requestType} <br/> Messaggio: <br/> ${message} </div>`,
+    };
 
-  return new Response(
-    JSON.stringify([name, email, businessName, requestType, message])
-  );
+    await transporter.sendMail(mailData);
+
+    return new Response(
+      JSON.stringify([name, email, businessName, requestType, message])
+    );
+  } catch (error) {
+    console.error("contactform error", error);
+    return new Response("Internal Server Error", { status: 500 });
+  }
 }
