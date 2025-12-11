@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "../textarea";
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useToast } from "@/hooks/use-toast";
 
@@ -48,7 +48,7 @@ function ContactForm({
         description: "",
     })
 
-    function handleSubmit(e : any) {
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
         if(!isVerified) {
@@ -67,10 +67,9 @@ function ContactForm({
             body: JSON.stringify({
                 email: formData.email,
                 name: formData.name,
-                surname: formData.surname,
-                business_name: formData.business_name,
-                request: formData.request,
-                description: formData.description,
+                businessName: formData.business_name,
+                requestType: formData.request,
+                message: formData.description,
             }),
         })
         .then((response) => response.json())
@@ -79,6 +78,13 @@ function ContactForm({
                 title: "Richiesta di contatto registrata con successo",
                 description: "A breve verrà contattato da uno dei nostri operatori",
               });
+        })
+        .catch(() => {
+            toast({
+                title: "Errore durante l'invio",
+                description: "Riprovare tra qualche secondo.",
+                variant: "destructive",
+            });
         })
         
         
@@ -122,7 +128,7 @@ function ContactForm({
                             <DialogTitle>Contattaci</DialogTitle>
                             <DialogDescription></DialogDescription>
                         </DialogHeader>
-                        <div className="flex flex-col gap-2">
+                        <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
                             <div>
                                 <Label htmlFor="email">Email</Label>
                                 <Input
@@ -185,10 +191,10 @@ function ContactForm({
                                 <p className="text-xs my-2">Cliccando "Invia" si dichiara di aver preso visione dell’informativa per il trattamento dei dati personali.</p>
                             </div>
 
-                            <Button type="submit" size="sm" className="px-3" onClick={handleSubmit}>
+                            <Button type="submit" size="sm" className="px-3">
                                 Invia
                             </Button>
-                        </div>
+                        </form>
                         <DialogFooter className="sm:justify-end">
                             <DialogClose asChild>
                                 <Button type="button" variant="secondary">Close</Button>
