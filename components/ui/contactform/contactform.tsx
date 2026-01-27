@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "../textarea";
 import React, { useRef, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useToast } from "@/hooks/use-toast";
 
 function ContactForm({
@@ -36,7 +36,7 @@ function ContactForm({
 }) {
 
     let imageUrl = urlFor(side_image.asset).url()
-    let captchaRef = useRef<ReCAPTCHA>(null)
+    let captchaRef = useRef<HCaptcha>(null)
     const { toast } = useToast()
     let [isVerified, setIsverified] = useState(false)
     let [formData, setFormData] = useState({
@@ -54,8 +54,8 @@ function ContactForm({
 
         if(!isVerified) {
             toast({
-                title: "Verifica reCAPTCHA fallita",
-                description: "Per favore, completa il reCAPTCHA.",
+                title: "Verifica hCaptcha fallita",
+                description: "Per favore, completa il controllo hCaptcha.",
                 });
             return
         }
@@ -96,7 +96,7 @@ function ContactForm({
         
     }
 
-    async function handleCaptchaSubmission(token: string | null) {
+    async function handleCaptchaSubmission(token: string) {
         // Server function to verify captcha
         const request = fetch("/api/captcha", {
           method: "POST",
@@ -104,7 +104,7 @@ function ContactForm({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            token: token
+            token
           }),
         });
     
@@ -189,10 +189,12 @@ function ContactForm({
                                 />
                             </div>
                             <div className="relative z-[70]">
-                                <ReCAPTCHA
+                                <HCaptcha
                                     ref={captchaRef}
-                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                                    onChange={handleCaptchaSubmission}
+                                    sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
+                                    onVerify={handleCaptchaSubmission}
+                                    onExpire={() => setIsverified(false)}
+                                    onError={() => setIsverified(false)}
                                 />
                                 <p className="text-xs my-2">Cliccando "Invia" si dichiara di aver preso visione dell’informativa per il trattamento dei dati personali.</p>
                             </div>

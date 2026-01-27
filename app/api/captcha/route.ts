@@ -1,9 +1,9 @@
 export async function POST(request: Request) {
   const { token } = await request.json();
-  const recaptchaSecretKey = process.env.CAPTCHA_SECRET_KEY;
+  const hcaptchaSecretKey = process.env.HCAPTCHA_SECRET_KEY;
 
-  if (!recaptchaSecretKey) {
-    return new Response("Missing CAPTCHA_SECRET_KEY", { status: 500 });
+  if (!hcaptchaSecretKey) {
+    return new Response("Missing HCAPTCHA_SECRET_KEY", { status: 500 });
   }
 
   if (!token) {
@@ -12,11 +12,11 @@ export async function POST(request: Request) {
 
   // Google expects application/x-www-form-urlencoded
   const body = new URLSearchParams({
-    secret: recaptchaSecretKey,
+    secret: hcaptchaSecretKey,
     response: token,
   });
 
-  const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+  const response = await fetch("https://hcaptcha.com/siteverify", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
