@@ -1,25 +1,11 @@
-import Link from "next/link";
-import Logo from "@/components/logo";
+"use client";
 
-const navItems = [
-  {
-    label: "Home",
-    href: "/",
-    target: false,
-  },
-  {
-    label: "Blog",
-    href: "/blog",
-    target: false,
-  },
-  {
-    label: "About",
-    href: "/about",
-    target: false,
-  },
-];
+import Logo from "@/components/logo";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname() || "/";
+  const isEn = pathname === "/en" || pathname.startsWith("/en/");
   const getCurrentYear = () => {
     return new Date().getFullYear();
   };
@@ -34,10 +20,21 @@ export default function Footer() {
               <Logo />
             </div>
             <p className="text-xs font-thin">
-              INTEGYS è una divisione iFortech
+              {isEn
+                ? "INTEGYS is a division of iFortech"
+                : "INTEGYS è una divisione iFortech"}
+            </p>
+            <p className="text-xs font-thin text-center">
+              {isEn
+                ? "SHARE CAPITAL € 40,000.00 fully paid - VAT & TAX ID: 07927140967 - REA: MI-1991600"
+                : "CAP. SOC. € 40.000,00 I.V. - P.IVA E CF: 07927140967 - REA: MI-1991600"}
+            </p>
+            <p className="text-xs font-thin text-center">
+              {isEn
+                ? "REGISTERED AND OPERATING OFFICE: VIA PORDENONE 35 COLOGNO MONZESE - 20093 (MI)"
+                : "SEDE LEGALE ED OPERATIVA: VIA PORDENONE 35 COLOGNO MONZESE - 20093 (MI)"}
             </p>
             <img src="https://integys.com/assets/images/logo-white-ift.png" width="119" alt=""></img>
-            <p className="text-xs font-thin">VIA PISA 250 - SESTO SAN GIOVANNI - 20099 (MI)</p>
             <p className="text-xs font-thin">&copy; {getCurrentYear()} INTEGYS. All rights reserved.</p>
           </div>
           <div className="flex flex-col"></div>

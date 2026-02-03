@@ -1,53 +1,73 @@
+"use client";
+
 import Link from "next/link";
 import Logo from "@/components/logo";
 import MobileNav from "@/components/header/mobile-nav";
 import DesktopNav from "@/components/header/desktop-nav";
 import { ModeToggle } from "@/components/menu-toggle";
+import LanguageSwitcher from "@/components/header/language-switcher";
+import { usePathname } from "next/navigation";
 
 
-const navItems = [
+const baseNavItems = [
   {
-    label: "Home",
+    key: "home",
     href: "/",
     target: false,
-    key: "home",
+    label: { it: "Home", en: "Home" },
   },
   {
-    label: "Azienda",
+    key: "azienda",
     href: "/azienda",
     target: false,
-    key: "azienda",
+    label: { it: "Azienda", en: "Company" },
   },
   {
-    label: "Pubblica Amministrazione",
+    key: "pubblica-amministrazione",
     href: "/ente-pubblico",
     target: false,
-    key: "pubblica-amministrazione",
+    label: { it: "Pubblica Amministrazione", en: "Public Administration" },
   },
   {
-    label: "Information Center",
+    key: "information-center",
     href: "https://news.integys.com/",
     target: true,
-    key: "information-center",
+    label: { it: "Information Center", en: "Information Center" },
   },
 ];
 
-export default async function Header() {
+function withEnPrefix(pathname: string) {
+  if (pathname === "/") return "/en/";
+  if (pathname.startsWith("/en/") || pathname === "/en") return pathname;
+  return `/en${pathname}`;
+}
 
+export default function Header() {
+  const pathname = usePathname() || "/";
+  const isEn = pathname === "/en" || pathname.startsWith("/en/");
+  const navItems = baseNavItems.map((item) => ({
+    key: item.key,
+    target: item.target,
+    href: item.target ? item.href : isEn ? withEnPrefix(item.href) : item.href,
+    label: isEn ? item.label.en : item.label.it,
+  }));
+  const logoHref = isEn ? "/en/" : "/";
 
   return (
     <header className="sticky top-0 w-full border-border/40 bg-background/95 z-50">
       <div className="container flex items-center justify-between h-14">
-        <Link href="/" aria-label="Home page">
+        <Link href={logoHref} aria-label="Home page">
           <div className="h-8">
             <Logo />
           </div>
         </Link>
         <div className="hidden xl:flex gap-7 items-center justify-between">
           <DesktopNav navItems={navItems} />
+          <LanguageSwitcher />
           <ModeToggle />
         </div>
         <div className="flex items-center xl:hidden">
+          <LanguageSwitcher />
           <ModeToggle />
           <MobileNav navItems={navItems} />
         </div>

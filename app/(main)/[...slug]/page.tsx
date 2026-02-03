@@ -6,23 +6,25 @@ import { generatePageMetadata } from "@/lib/metadata";
 export const dynamic = "force-static";
 
 export async function generateMetadata(props: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }) {
   const params = await props.params;
-  const page = await fetchSanityPageBySlug({ slug: params.slug });
+  const slugPath = params.slug.join("/");
+  const page = await fetchSanityPageBySlug({ slug: slugPath });
 
   if (!page) {
     notFound();
   }
 
-  return generatePageMetadata({ page, slug: params.slug });
+  return generatePageMetadata({ page, slug: slugPath });
 }
 
 export default async function Page(props: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }) {
   const params = await props.params;
-  const page = await fetchSanityPageBySlug({ slug: params.slug });
+  const slugPath = params.slug.join("/");
+  const page = await fetchSanityPageBySlug({ slug: slugPath });
 
   if (!page) {
     notFound();

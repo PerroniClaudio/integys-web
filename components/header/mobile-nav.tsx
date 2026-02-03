@@ -27,7 +27,7 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
           <TextAlignRightIcon className="dark:text-white" />
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="text-foreground">
         <SheetHeader>
           <div className="mr-6 ml-auto h-12">
             <Logo />
@@ -39,7 +39,7 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
         </SheetHeader>
         <div className="pt-10 pb-20">
           <div className="container">
-            <ul className="list-none text-right space-y-3">
+            <ul className="list-none text-right space-y-3 text-foreground">
               <>
                 {navItems.map((navItem) => (
                   <li key={navItem.key}>
@@ -48,7 +48,7 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
                       href={navItem.href}
                       target={navItem.target ? "_blank" : undefined}
                       rel={navItem.target ? "noopener noreferrer" : undefined}
-                      className="hover:text-decoration-none hover:opacity-50 text-lg"
+                      className="text-foreground/90 hover:text-foreground hover:opacity-100 text-lg transition-colors"
                     >
                       {navItem.label}
                     </Link>
