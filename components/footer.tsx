@@ -21,8 +21,8 @@ export default function Footer() {
             </div>
             <p className="text-xs font-thin">
               {isEn
-                ? "INTEGYS is a division of iFortech"
-                : "INTEGYS è una divisione iFortech"}
+                ? "INTEGYS is a division of iFortech srl"
+                : "INTEGYS è una divisione iFortech srl"}
             </p>
             <p className="text-xs font-thin text-center">
               {isEn
@@ -31,8 +31,8 @@ export default function Footer() {
             </p>
             <p className="text-xs font-thin text-center">
               {isEn
-                ? "REGISTERED AND OPERATING OFFICE: VIA PORDENONE 35 COLOGNO MONZESE - 20093 (MI)"
-                : "SEDE LEGALE ED OPERATIVA: VIA PORDENONE 35 COLOGNO MONZESE - 20093 (MI)"}
+                ? "REGISTERED OFFICE: VIA PORDENONE 35 COLOGNO MONZESE - 20093 (MI)"
+                : "SEDE LEGALE: VIA PORDENONE 35 COLOGNO MONZESE - 20093 (MI)"}
             </p>
             <img src="https://integys.com/assets/images/logo-white-ift.png" width="119" alt=""></img>
             <p className="text-xs font-thin">&copy; {getCurrentYear()} INTEGYS. All rights reserved.</p>
