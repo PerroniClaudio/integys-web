@@ -7,6 +7,7 @@ import DesktopNav from "@/components/header/desktop-nav";
 import { ModeToggle } from "@/components/menu-toggle";
 import LanguageSwitcher from "@/components/header/language-switcher";
 import { usePathname } from "next/navigation";
+import { Suspense } from "react";
 
 
 const baseNavItems = [
@@ -63,11 +64,15 @@ export default function Header() {
         </Link>
         <div className="hidden xl:flex gap-7 items-center justify-between">
           <DesktopNav navItems={navItems} />
-          <LanguageSwitcher />
+          <Suspense fallback={<div className="h-8 w-10" />}>
+            <LanguageSwitcher />
+          </Suspense>
           <ModeToggle />
         </div>
         <div className="flex items-center xl:hidden">
-          <LanguageSwitcher />
+          <Suspense fallback={<div className="h-8 w-10" />}>
+            <LanguageSwitcher />
+          </Suspense>
           <ModeToggle />
           <MobileNav navItems={navItems} />
         </div>
