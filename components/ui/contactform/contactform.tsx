@@ -21,7 +21,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "../textarea";
 import React, { useRef, useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import { useToast } from "@/hooks/use-toast";
+import { usePathname } from "next/navigation";
+import { toast } from "sonner";
 
 function ContactForm({
     title,
@@ -34,11 +35,12 @@ function ContactForm({
     button_text: string,
     side_image: Sanity.Image
 }) {
+    const pathname = usePathname() || "/";
+    const isEn = pathname === "/en" || pathname.startsWith("/en/");
 
     let imageUrl = urlFor(side_image.asset).url()
-    let captchaRef = useRef<HCaptcha>(null)
-    const { toast } = useToast()
-    let [isVerified, setIsverified] = useState(false)
+    let captchaRef = useRef<HCaptcha>(null);
+    let [hCaptchaToken, setHCaptchaToken] = useState<string | null>(null);
     let [formData, setFormData] = useState({
         email: "",
         name: "",
@@ -49,15 +51,11 @@ function ContactForm({
     })
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault()
-        console.log("handleSubmit called", { isVerified, formData });
+        e.preventDefault();
 
-        if(!isVerified) {
-            toast({
-                title: "Verifica hCaptcha fallita",
-                description: "Per favore, completa il controllo hCaptcha.",
-                });
-            return
+        if (!hCaptchaToken) {
+            toast.error(isEn ? "hCAPTCHA verification failed. Please complete the hCAPTCHA." : "Verifica hCAPTCHA fallita. Per favore, completa il hCAPTCHA.");
+            return;
         }
 
         try {
@@ -69,52 +67,61 @@ function ContactForm({
                 body: JSON.stringify({
                     email: formData.email,
                     name: formData.name,
+                    surname: formData.surname,
                     businessName: formData.business_name,
                     requestType: formData.request,
-                    message: formData.description,
+                    description: formData.description,
+                    hCaptchaToken: hCaptchaToken,
+                    language: isEn ? "en" : "it",
                 }),
             })
 
             const data = await response.json()
 
             if (!response.ok) {
-                throw new Error(data?.message || "Invio non riuscito")
-            }
+                // Se il problema è hCaptcha, resetta e forza una nuova verifica
+                if (data.error && (data.error.includes('hCaptcha') || data.error.includes('captcha'))) {
+                    console.log('Captcha error detected, resetting captcha');
+                    captchaRef.current?.resetCaptcha();
+                    setHCaptchaToken(null);
+                }
 
-            toast({
-                title: "Richiesta di contatto registrata con successo",
-                description: data?.message || "A breve verrà contattato da uno dei nostri operatori",
-              });
+                throw new Error(data?.message || (isEn ? "Submission failed" : "Invio non riuscito"))
+            }
+            toast.success(data?.message || (isEn ? "Contact request successfully registered." : "Richiesta di contatto registrata con successo."));
         } catch (error) {
-            toast({
-                title: "Errore durante l'invio",
-                description: error instanceof Error ? error.message : "Riprovare tra qualche secondo.",
-                variant: "destructive",
+            toast.error(error instanceof Error ? error.message : (isEn ? "Error during submission. Please try again in a few seconds." : "Errore durante l'invio. Riprovare tra qualche secondo."));
+        } finally {
+            // Reset del form e del captcha dopo il tentativo di invio
+            setFormData({
+                email: "",
+                name: "",
+                surname: "",
+                business_name: "",
+                request: "",
+                description: "",
             });
+            captchaRef.current?.resetCaptcha();
+            setHCaptchaToken(null);
         }
-        
-        
     }
 
     async function handleCaptchaSubmission(token: string) {
-        // Server function to verify captcha
-        const request = fetch("/api/captcha", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            token
-          }),
+        console.log('New hCaptcha token received:', {
+            hasToken: !!token,
+            tokenLength: token?.length,
+            tokenPreview: token ? `${token.substring(0, 20)}...` : 'none'
         });
-    
-        const response = await request;
-        if(response.ok) {
-          setIsverified(true)
+
+        // Validazione robusta del token hCAPTCHA
+        if (token && typeof token === 'string' && token.length > 20) {
+            setHCaptchaToken(token);
+            console.log('hCaptcha token saved, ready for submission');
         } else {
-          setIsverified(false)
+            setHCaptchaToken(null);
+            console.log('Invalid or missing hCaptcha token');
         }
-      }
+    }
 
     return (
         <Dialog>
@@ -128,15 +135,14 @@ function ContactForm({
                     <DialogTrigger asChild className="lg:w-1/3">
                         <Button>{button_text}</Button>
                     </DialogTrigger>
-
                     <DialogContent className="sm:max-w-md z-[60]">
                         <DialogHeader>
-                            <DialogTitle>Contattaci</DialogTitle>
+                            <DialogTitle>{isEn ? "Contact Us" : "Contattaci"}</DialogTitle>
                             <DialogDescription></DialogDescription>
                         </DialogHeader>
                         <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
                             <div>
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email">{isEn ? "Email" : "Email"}</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -145,7 +151,7 @@ function ContactForm({
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="name">Nome</Label>
+                                <Label htmlFor="name">{isEn ? "First Name" : "Nome"}</Label>
                                 <Input
                                     id="name"
                                     type="text"
@@ -154,7 +160,7 @@ function ContactForm({
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="surname">Cognome</Label>
+                                <Label htmlFor="surname">{isEn ? "Last Name" : "Cognome"}</Label>
                                 <Input
                                     id="surname"
                                     type="text"
@@ -163,7 +169,7 @@ function ContactForm({
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="business_name">Azienda</Label>
+                                <Label htmlFor="business_name">{isEn ? "Company" : "Azienda"}</Label>
                                 <Input
                                     id="business_name"
                                     type="text"
@@ -172,7 +178,7 @@ function ContactForm({
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="request">Richiesta</Label>
+                                <Label htmlFor="request">{isEn ? "Request" : "Richiesta"}</Label>
                                 <Input
                                     id="request"
                                     type="text"
@@ -181,7 +187,7 @@ function ContactForm({
                                 />
                             </div>
                             <div>
-                                <Label htmlFor="description">Descrizione</Label>
+                                <Label htmlFor="description">{isEn ? "Description" : "Descrizione"}</Label>
                                 <Textarea
                                     id="description"
                                     value={formData.description}
@@ -193,19 +199,19 @@ function ContactForm({
                                     ref={captchaRef}
                                     sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
                                     onVerify={handleCaptchaSubmission}
-                                    onExpire={() => setIsverified(false)}
-                                    onError={() => setIsverified(false)}
+                                    onExpire={() => setHCaptchaToken(null)}
+                                    onError={() => setHCaptchaToken(null)}
                                 />
-                                <p className="text-xs my-2">Cliccando "Invia" si dichiara di aver preso visione dell’informativa per il trattamento dei dati personali.</p>
+                                <p className="text-xs my-2">{isEn ? 'By clicking "Submit" you declare that you have read the privacy policy.' : 'Cliccando "Invia" si dichiara di aver preso visione dell’informativa per il trattamento dei dati personali.'}</p>
                             </div>
 
                             <Button type="submit" size="sm" className="px-3">
-                                Invia
+                                {isEn ? "Submit" : "Invia"}
                             </Button>
                         </form>
                         <DialogFooter className="sm:justify-end">
                             <DialogClose asChild>
-                                <Button type="button" variant="secondary">Close</Button>
+                                <Button type="button" variant="secondary">{isEn ? "Close" : "Chiudi"}</Button>
                             </DialogClose>
                         </DialogFooter>
                     </DialogContent>

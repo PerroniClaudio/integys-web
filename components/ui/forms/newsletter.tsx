@@ -79,7 +79,7 @@ export default function FormNewsletter({
         const result = await response.json();
 
         if (response.ok) {
-          toast(successMessage);
+          toast.success(successMessage);
           form.reset();
         } else {
           toast.error(result.error);
