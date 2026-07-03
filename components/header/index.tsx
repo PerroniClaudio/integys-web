@@ -17,18 +17,18 @@ const baseNavItems = [
     target: false,
     label: { it: "Home", en: "Home" },
   },
-  {
-    key: "azienda",
-    href: "/azienda",
-    target: false,
-    label: { it: "Azienda", en: "Company" },
-  },
-  {
-    key: "pubblica-amministrazione",
-    href: "/ente-pubblico",
-    target: false,
-    label: { it: "Pubblica Amministrazione", en: "Public Administration" },
-  },
+  // {
+  //   key: "azienda",
+  //   href: "/azienda",
+  //   target: false,
+  //   label: { it: "Azienda", en: "Company" },
+  // },
+  // {
+  //   key: "pubblica-amministrazione",
+  //   href: "/ente-pubblico",
+  //   target: false,
+  //   label: { it: "Pubblica Amministrazione", en: "Public Administration" },
+  // },
   {
     key: "information-center",
     href: "https://news.integys.com/",
