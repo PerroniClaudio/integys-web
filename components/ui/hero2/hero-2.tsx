@@ -37,7 +37,7 @@ export default function Hero2({
           </div>
         )}
 
-        <div className="w-full flex flex-col gap-4 bg-black bg-opacity-60 py-8 absolute bottom-0 text-white">
+        <div className="w-full flex flex-col gap-4 bg-black bg-opacity-60 py-8 absolute self-center text-white">
           {title && (
             <div className="text-center w-full">
               <h1 className="leading-[0]">
