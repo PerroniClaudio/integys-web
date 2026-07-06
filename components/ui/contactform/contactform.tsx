@@ -125,7 +125,7 @@ function ContactForm({
 
     return (
         <Dialog>
-            <div className="grid grid-cols-2 bg-muted">
+            <div id="contacts" className="grid grid-cols-2 bg-muted">
                 <div className="bg-no-repeat bg-cover" style={{backgroundImage: `url(${imageUrl})`,  backgroundPosition: "-15% 30%"}}></div>
                 <div className="flex flex-col px-8 py-16 gap-4">
                     <h2 className="text-3xl font-bold">{title}</h2>
